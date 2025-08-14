@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Generator Prompt CS Shopee L1 — v3 (Tab 1 + EDD + GTW + SLA)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{--bg1:#f8faff;--bg2:#e3f2fd;--pri:#42a5f5;--pri-dark:#1e88e5;--text:#111827;--muted:#4b5563;--red:#ef4444;--green:#10b981;--pink:#ffe4e6;--mint:#dcfce7}
+    *{box-sizing:border-box}
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:22px;background:linear-gradient(90deg,var(--bg1),var(--bg2));color:var(--text)}
+    h2{margin:0 0 16px;text-align:center}
+    .tabs{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+    .tab{padding:10px 16px;background:#e3f2fd;border-radius:10px 10px 0 0;cursor:pointer;transition:.2s;user-select:none}
+    .tab:hover{background:#bbdefb;transform:translateY(-2px)}
+    .tab.active{background:#90caf9;font-weight:700;box-shadow:0 -2px 5px rgba(0,0,0,.08) inset}
+    .wrap{border:1px solid #cfe0ff;border-top:none;border-radius:0 12px 12px 12px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+    .section{display:none;padding:16px}
+    .section.active{display:block;animation:fade .25s ease}
+    @keyframes fade{from{opacity:.4}to{opacity:1}}
+    table{width:100%;border-spacing:10px}
+    .lbl{width:280px;font-weight:700;color:var(--muted);vertical-align:top}
+    .lbl.req::after{content:" *";color:var(--red)}
+    .inp input,.inp textarea,.inp select{width:100%;padding:8px 10px;border:1px solid #ccd6e6;border-radius:8px;min-height:38px}
+    .inp textarea{min-height:76px}
+    .helper{font-size:12px;color:#6b7280;margin-top:4px}
+    .controls{display:flex;gap:10px;justify-content:center;margin:14px 0}
+    button{padding:10px 16px;border:none;border-radius:10px;background:var(--pri);color:#fff;cursor:pointer;transition:.2s}
+    button:hover{background:var(--pri-dark);transform:translateY(-1px)}
+    .ghost{background:#eef5ff;color:#1a3b6b}
+    pre{white-space:pre-wrap;background:#f6f8fb;border:1px solid #e7ecf7;border-radius:12px;padding:12px;margin:12px 0}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#eaf3ff;color:#1a3b6b;font-size:12px;margin-left:6px}
+    .hidden{display:none}
+    .progress{height:8px;background:#eef3ff;border-radius:999px;overflow:hidden;margin-top:4px}
+    .progress>span{display:block;height:100%;background:var(--pri);width:0%}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600}
+    .pill.before{background:var(--mint)}
+    .pill.after{background:var(--pink)}
+    .actions{display:flex;gap:8px;justify-content:center}
+    a.btn{display:inline-block;text-decoration:none;padding:10px 16px;border-radius:10px;background:#111827;color:#fff}
+    .group-title{margin:16px 0 6px;font-weight:800;color:#1f2937}
+    .subtle{color:#6b7280;font-size:12px}
+  </style>
+</head>
+<body>
+  <h2>Generator Prompt CS Shopee L1 — v3</h2>
+  <div class="tabs">
+    <div class="tab active" data-tab="wait">Tab 1 · Menunggu tim terkait</div>
+    <div class="tab" data-tab="reply">Tab 2 · Informasi hasil related case</div>
+  </div>
+
+  <div class="wrap">
+    <!-- TAB 1 -->
+    <section id="wait" class="section active">
+      <div class="group-title">Data Utama</div>
+      <table>
+        <tr><td class="lbl req">Nama Agent</td><td class="inp"><input id="namaAgent_wait" placeholder="Contoh: Yudha" /></td></tr>
+        <tr><td class="lbl req">Nama produk (general)</td><td class="inp"><input id="barang_wait" placeholder="Contoh: Botol kosong 30ml (umum)" /></td></tr>
+        <tr>
+          <td class="lbl req">User menghubungi tanggal</td>
+          <td class="inp">
+            <input id="tglHubungi_wait" placeholder="DD-MM-YYYY HH:mm WIB (contoh: 13-08-2025 09:15 WIB)" />
+            <div class="helper">Otomatis diformat ke WIB: DD-MM-YYYY HH:mm WIB</div>
+          </td>
+        </tr>
+        <tr><td class="lbl req">Nomor pesanan</td><td class="inp"><input id="noPesanan_wait" placeholder="Contoh: 2508XXXXXXXX" /></td></tr>
+        <tr>
+          <td class="lbl">Balasan terakhir dari user</td>
+          <td class="inp">
+            <textarea id="pesanUser_wait" placeholder="Contoh: user sangat kesal karena paket terlambat"></textarea>
+            <label style="display:flex;gap:6px;margin-top:6px"><input type="checkbox" id="filterKasar_wait" checked /> Filter bahasa kasar (disarankan)</label>
+          </td>
+        </tr>
+        <tr><td class="lbl">Sudah menghubungi di cases sebelumnya?</td><td class="inp"><select id="sudahCases_wait"><option>Sudah</option><option>Belum</option></select></td></tr>
+        <tr><td class="lbl">Nomor pelaporan yang berhubungan</td><td class="inp"><input id="noRelated_wait" placeholder="1954…" /></td></tr>
+        <tr><td class="lbl">Kapan menghubungi di nomor pelaporan yang sebelumnya</td><td class="inp"><input id="tglDiRelated_wait" placeholder="DD-MM-YYYY HH:mm WIB" /></td></tr>
+        <tr><td class="lbl">Tanggal eskalasi ke tim terkait</td><td class="inp"><input id="tglFollow_wait" placeholder="DD-MM-YYYY HH:mm WIB" /></td></tr>
+        <tr><td class="lbl">Tanggal logistics status terbaru</td><td class="inp"><input id="tglLogistics_wait" placeholder="DD-MM-YYYY HH:mm WIB" /></td></tr>
+        <tr><td class="lbl">Rincian Informasi Kurir</td><td class="inp"><textarea id="rincianKurir_wait" placeholder="Contoh: Kurir menelepon 2x, akan antar ulang besok pagi."></textarea></td></tr>
+      </table>
+
+      <div class="group-title">Status Estimasi Pengantaran</div>
+      <table>
+        <tr>
+          <td class="lbl">Status estimasi pengantaran</td>
+          <td class="inp">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <select id="eddStatus_wait">
+                <option value="">Pilih…</option>
+                <option value="Before">Belum melewati estimasi</option>
+                <option value="After">Sudah melewati estimasi</option>
+              </select>
+              <span id="eddPill" class="pill hidden">—</span>
+            </div>
+            <div class="helper">Di email, istilah ini akan disampaikan sebagai “tanggal estimasi pengantaran”, tanpa singkatan.</div>
+          </td>
+        </tr>
+        <tr><td class="lbl">Tanggal estimasi pengantaran</td><td class="inp"><input id="tglEDD_wait" placeholder="DD-MM-YYYY HH:mm WIB" /></td></tr>
+      </table>
+
+      <div class="group-title">SLA</div>
+      <table>
+        <tr>
+          <td class="lbl">Sudah ada SLA?</td>
+          <td class="inp">
+            <select id="slaExists">
+              <option value="">Pilih…</option>
+              <option value="Sudah">Sudah</option>
+              <option value="Belum">Belum</option>
+            </select>
+            <div class="helper">Jika “Belum”, isi informasi internal di bawah. Di email ke user, akan disebut sebagai “tanggal batas tindak lanjut”.</div>
+          </td>
+        </tr>
+        <tr class="sla-cond hidden">
+          <td class="lbl">Lokasi paket saat ini</td>
+          <td class="inp"><input id="lokasiBCT" placeholder="Contoh: Gudang Banjarmasin 2" /></td>
+        </tr>
+        <tr class="sla-cond hidden">
+          <td class="lbl">Tanggal BCT (internal)</td>
+          <td class="inp">
+            <input id="tglBCT" placeholder="DD-MM-YYYY" />
+            <div class="helper">Di email, akan ditulis sebagai “dimohon menunggu hingga tanggal batas tindak lanjut: DD-MM-YYYY”.</div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="group-title">GTW (Guarantee To Win)</div>
+      <table>
+        <tr>
+          <td class="lbl">Eligible GTW?</td>
+          <td class="inp">
+            <select id="gtwEligible">
+              <option value="">Pilih…</option>
+              <option value="Yes">Ya</option>
+              <option value="No">Tidak</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="gtw-cond gtw-eligible hidden">
+          <td class="lbl">Sudah Claim Voucher GTW?</td>
+          <td class="inp">
+            <select id="gtwClaimed">
+              <option value="">Pilih…</option>
+              <option value="Yes">Sudah</option>
+              <option value="No">Belum</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="gtw-cond gtw-eligible gtw-not-claimed hidden">
+          <td class="lbl">Sentiment User</td>
+          <td class="inp">
+            <select id="gtwSatisfied">
+              <option value="">Pilih…</option>
+              <option value="Netral">Netral</option>
+              <option value="Tidak Netral">Tidak Netral</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="gtw-cond gtw-show-gdt hidden">
+          <td class="lbl">Informasi untuk Guarantee Delivery Time</td>
+          <td class="inp">
+            <input id="tglPesananSelesai" placeholder="Tanggal status Pesanan Selesai — DD-MM-YYYY HH:mm WIB" />
+            <div style="height:6px"></div>
+            <input id="tglGuaranteeDeliveryTime" placeholder="Tanggal Guarantee Delivery Time — DD-MM-YYYY" />
+            <div class="helper">Semua istilah akan ditulis lengkap sebagai “Guarantee Delivery Time”.</div>
+            <div class="helper subtle" style="margin-top:6px">
+              Pesan ke user (otomatis dipakai di prompt):
+              <ul style="margin:6px 0 0 18px;padding:0">
+                <li>Infokan tanggal <b>Guarantee Delivery Time</b>.</li>
+                <li>Buyer harus klaim voucher maksimal <b>3 hari</b> setelah status pesanan berubah menjadi <b>Pesanan Selesai</b>.</li>
+                <li>Buyer dapat cek tanggal <b>Guarantee Delivery Time</b> pada halaman rincian pesanan pada pesanan yang terkendala.</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="progress" title="Indikator kelengkapan">
+        <span id="prog_wait"></span>
+      </div>
+      <div class="controls">
+        <button id="btnGenerate_wait">Generate Prompt (Tab 1)</button>
+        <button id="btnCopy_wait" class="ghost">Copy Prompt</button>
+      </div>
+    </section>
+
+    <!-- TAB 2 (placeholder, tetap ada agar kompatibel) -->
+    <section id="reply" class="section">
+      <div class="helper">Tab 2 mengikuti versi sebelumnya. Jika perlu revisi lanjutan, bilang ya.</div>
+      <div class="progress"><span id="prog_reply"></span></div>
+      <div class="controls">
+        <button id="btnGenerate_reply">Generate Prompt (Tab 2)</button>
+        <button id="btnCopy_reply" class="ghost">Copy Prompt</button>
+      </div>
+    </section>
+  </div>
+
+  <pre id="output" placeholder="Hasil prompt akan muncul di sini…"></pre>
+  <div class="actions">
+    <a class="btn" href="https://chat.openai.com/" target="_blank" rel="noopener">Buka ChatGPT</a>
+  </div>
+
+  <script>
+    // Tabs
+    const tabs=[...document.querySelectorAll('.tab')];
+    const secs=[...document.querySelectorAll('.section')];
+    tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');secs.forEach(s=>s.classList.remove('active'));document.getElementById(t.dataset.tab).classList.add('active');}));
+
+    // Helpers
+    const $=id=>document.getElementById(id);
+    const show=(el,flag)=>{el.classList.toggle('hidden',!flag)};
+
+    // Profanity filter
+    function sanitizeUserMessage(msg){
+      if(!msg) return '';
+      const badWords=['anjing','bangsat','kampret','goblok','tolol','bajingan','kontol','memek','asw','asu','tai','sialan','fuck','shit','bitch'];
+      let s=msg, lower=msg.toLowerCase();
+      if(badWords.some(w=>lower.includes(w))){
+        badWords.forEach(w=>{const re=new RegExp(w,'gi'); s=s.replace(re,'');});
+        s = s.replace(/\s{2,}/g,' ').trim();
+        if(!s) s='User menyampaikan kekesalan karena keterlambatan paket.';
+      }
+      return s;
+    }
+
+    // Format WIB
+    function fmtWIB(s){
+      if(!s) return '';
+      const m=s.match(/(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})\s+(\d{1,2}):(\d{2})/);
+      if(m){
+        const dd=String(m[1]).padStart(2,'0'), mm=String(m[2]).padStart(2,'0'), yy=m[3], HH=String(m[4]).padStart(2,'0'), MM=m[5];
+        return `${dd}-${mm}-${yy} ${HH}:${MM} WIB`;
+      }
+      const tryDate=new Date(s.replace(/(\d{2})-(\d{2})-(\d{4})/,'$2/$1/$3'));
+      if(!isNaN(tryDate.getTime())){
+        const pad=n=>String(n).padStart(2,'0');
+        const d=pad(tryDate.getDate()), m2=pad(tryDate.getMonth()+1), y=tryDate.getFullYear();
+        const hh=pad(tryDate.getHours()), mm2=pad(tryDate.getMinutes());
+        return `${d}-${m2}-${y} ${hh}:${mm2} WIB`;
+      }
+      return s.endsWith('WIB')?s:(s+" WIB");
+    }
+
+    // Progress
+    const required_wait=['namaAgent_wait','barang_wait','tglHubungi_wait','noPesanan_wait'];
+    function updateProgressWait(){
+      let total=required_wait.length, ok=0;
+      required_wait.forEach(id=>{ if($(id).value && $(id).value.trim()!=='') ok++; });
+      const pct=Math.max(0,Math.min(100,Math.round((ok/total)*100)));
+      $('prog_wait').style.width=pct+'%';
+      $('prog_wait').title=`Kelengkapan ~ ${pct}%`;
+    }
+    document.querySelectorAll('#wait input,#wait textarea,#wait select').forEach(el=>{
+      el.addEventListener('input',e=>{
+        // auto-format WIB
+        if(['tglHubungi_wait','tglDiRelated_wait','tglFollow_wait','tglLogistics_wait','tglEDD_wait','tglPesananSelesai'].includes(e.target.id)){
+          const cur=e.target.value; e.target.value=fmtWIB(cur);
+        }
+        // pill estimasi
+        if(e.target.id==='eddStatus_wait'){
+          const v=e.target.value; const pill=$('eddPill');
+          if(v==='Before'){ pill.textContent='Belum melewati estimasi'; pill.className='pill before'; show(pill,true); }
+          else if(v==='After'){ pill.textContent='Sudah melewati estimasi'; pill.className='pill after'; show(pill,true); }
+          else { show(pill,false); }
+        }
+        updateProgressWait();
+      });
+    });
+    updateProgressWait();
+
+    // SLA show/hide
+    const slaSel=$('slaExists');
+    const slaConds=[...document.querySelectorAll('.sla-cond')];
+    slaSel.addEventListener('change',()=>{ const v=slaSel.value; slaConds.forEach(e=>show(e,v==='Belum')); });
+
+    // GTW show/hide
+    const gtwEligible=$('gtwEligible');
+    const gtwClaimed=$('gtwClaimed');
+    const gtwSatisfied=$('gtwSatisfied');
+    function syncGTW(){
+      const eligible = gtwEligible.value==='Yes';
+      const claimed  = gtwClaimed.value==='Yes';
+      const notClaim = gtwClaimed.value==='No';
+      const Netral     = gtwSatisfied.value==='Netral';
+      document.querySelectorAll('.gtw-cond').forEach(e=>show(e,false));
+      if(eligible){
+        document.querySelectorAll('.gtw-eligible').forEach(e=>show(e,true));
+        show(document.querySelector('.gtw-not-claimed'), eligible && !claimed);
+        show(document.querySelector('.gtw-show-gdt'), eligible && notClaim && Netral);
+      }
+    }
+    [gtwEligible,gtwClaimed,gtwSatisfied].forEach(el=>el.addEventListener('change',syncGTW));
+
+    // Gaya komunikasi (user-friendly)
+    const gayaKomunikasi=`Gunakan gaya komunikasi Shopee CS Level 1:
+- Pakai kata ganti "Aku"
+- Buka dengan "Halo Kak" + perkenalan singkat
+- Empatik, hangat, jelas, personal
+- Hindari istilah sistem/teknis dan singkatan yang tidak dikenal user
+- Jangan menyalin kata kasar (ringkas secara netral)
+- Struktur: pembuka → empati → penjelasan → solusi/next step → edukasi → penutup`;
+
+    $('btnGenerate_wait').addEventListener('click',()=>{
+      const nama=$('namaAgent_wait').value?.trim();
+      const barang=$('barang_wait').value?.trim();
+      const tglHub=fmtWIB($('tglHubungi_wait').value?.trim());
+      const noPes=$('noPesanan_wait').value?.trim();
+      const pesanRaw=$('pesanUser_wait').value?.trim();
+      const pesan= $('filterKasar_wait').checked ? sanitizeUserMessage(pesanRaw) : pesanRaw;
+      const sudahCases=$('sudahCases_wait').value;
+      const noRel=$('noRelated_wait').value?.trim();
+      const tglDiRel=fmtWIB($('tglDiRelated_wait').value?.trim());
+      const tFollow=fmtWIB($('tglFollow_wait').value?.trim());
+      const tLog=fmtWIB($('tglLogistics_wait').value?.trim());
+      const rincianKurir=$('rincianKurir_wait').value?.trim();
+
+      const eddStatus=$('eddStatus_wait').value; // Before/After/""
+      const tglEDD=fmtWIB($('tglEDD_wait').value?.trim());
+
+      const sla=$('slaExists').value; // Sudah/Belum/""
+      const lokasiBCT=$('lokasiBCT').value?.trim();
+      const tglBCT=$('tglBCT').value?.trim();
+
+      const gtwElig=gtwEligible.value; // Yes/No/""
+      const gtwClm=gtwClaimed.value;   // Yes/No/""
+      const gtwSat=gtwSatisfied.value; // Netral/Tidak Netral/""
+      const tPesSelesai=fmtWIB($('tglPesananSelesai').value?.trim());
+      const tGuarantee=$('tglGuaranteeDeliveryTime').value?.trim();
+
+      const errs=[];
+      if(!nama) errs.push('Nama Agent wajib diisi');
+      if(!barang) errs.push('Nama produk (general) wajib diisi');
+      if(!tglHub) errs.push('User menghubungi tanggal wajib diisi');
+      if(!noPes) errs.push('Nomor pesanan wajib diisi');
+
+      // Validasi SLA (jika Belum)
+      if(sla==='Belum' && !lokasiBCT) errs.push('Lokasi paket saat ini (SLA=Belum) wajib diisi');
+      if(sla==='Belum' && !tglBCT) errs.push('Tanggal BCT (SLA=Belum) wajib diisi');
+
+      // Validasi GTW → jika perlu informasikan Guarantee Delivery Time
+      const needGDT = (gtwElig==='Yes' && gtwClm==='No' && gtwSat==='Netral');
+      if(needGDT){
+        if(!tPesSelesai) errs.push('Tanggal “Pesanan Selesai” (GTW) wajib diisi');
+        if(!tGuarantee) errs.push('Tanggal Guarantee Delivery Time wajib diisi');
+      }
+
+      if(errs.length){
+        $('output').textContent='⚠️ Mohon lengkapi data berikut:\n- '+errs.join('\n- ');
+        return;
+      }
+
+      // Catatan estimasi (tanpa sebut EDD)
+      let estimasiNote='';
+      if(eddStatus==='After' && tglEDD){
+        estimasiNote = `\n\nCatatan estimasi pengantaran: Mohon maaf pengantaran sudah melewati tanggal estimasi (${tglEDD}).`;
+      } else if(eddStatus==='Before' && tglEDD){
+        estimasiNote = `\n\nCatatan estimasi pengantaran: Saat ini masih dalam rentang estimasi (${tglEDD}). Mohon menunggu hingga akhir hari pada tanggal tersebut.`;
+      }
+
+      // SLA (user-friendly, tanpa istilah SLA/BCT)
+      let slaInfo='';
+      if(sla==='Belum'){
+        slaInfo = `- Informasikan bahwa pengiriman berpotensi mengalami keterlambatan dan pesanan masih dalam perjalanan.\n- Lokasi paket saat ini: ${lokasiBCT}.\n- Sarankan user untuk menunggu hingga tanggal batas tindak lanjut: ${tglBCT}.`;
+      }
+
+      // GTW → Guarantee Delivery Time (full, no acronym)
+      let gtwInfo='';
+      let gtwAction=''; // ringkasan keputusan
+      if(gtwElig==='No'){
+        gtwAction='Do Not Inform (GTW tidak eligible)';
+      } else if(gtwElig==='Yes' && gtwClm==='Yes'){
+        gtwAction='Not Inform (GTW sudah diklaim)';
+      } else if(gtwElig==='Yes' && gtwClm==='No' && gtwSat==='Tidak Netral'){
+        gtwAction='Not Inform (user tidak Netral)';
+      } else if(needGDT){
+        gtwAction='Inform (tampilkan informasi Guarantee Delivery Time)';
+        gtwInfo =
+`- Infokan tanggal **Guarantee Delivery Time**.
+- Buyer harus klaim voucher maksimal **3 hari** setelah status pesanan berubah menjadi **Pesanan Selesai**.
+- Buyer dapat cek tanggal **Guarantee Delivery Time** pada halaman rincian pesanan untuk pesanan yang terkendala.
+- Tanggal “Pesanan Selesai”: ${tPesSelesai}
+- Tanggal Guarantee Delivery Time: ${tGuarantee}`;
+      }
+
+      const header =
+`Tolong buatkan skrip email CS Shopee berdasarkan data berikut (MODE: menunggu tim terkait):
+Nama Agent : ${nama}
+Nama produk (general) : ${barang}
+User menghubungi tanggal : ${tglHub}
+Nomor pesanan : ${noPes}
+Balasan terakhir dari user : ${pesan}
+${$('sudahCases_wait').value==='Sudah' ? `Nomor pelaporan sebelumnya : ${noRel}\nWaktu pada pelaporan sebelumnya : ${tglDiRel}` : ''}Tanggal eskalasi ke tim terkait : ${tFollow}
+Tanggal logistics status terbaru : ${tLog}${rincianKurir?`\nRincian informasi kurir : ${rincianKurir}`:''}${estimasiNote}
+
+${gayaKomunikasi}
+
+Instruksi tambahan (hindari bahasa sistem/teknis, jangan gunakan singkatan yang tidak jelas bagi user):`;
+
+      const bullets = [
+        slaInfo ? `• ${slaInfo}` : null,
+        eddStatus ? (eddStatus==='After'
+          ? '• Sampaikan permintaan maaf karena sudah melewati tanggal estimasi pengantaran. Jelaskan bahwa penanganan diprioritaskan.'
+          : '• Edukasi user untuk menunggu hingga tanggal estimasi pengantaran berakhir (EOD).') : null,
+        gtwInfo ? `• ${gtwInfo}` : null,
+      ].filter(Boolean).join('\n');
+
+      const ringkasanKeputusan = `\nRingkasan keputusan GTW: ${gtwAction || '—'}`;
+
+      const prompt = `${header}
+${bullets}
+${ringkasanKeputusan}`;
+
+      $('output').textContent = prompt;
+    });
+
+    $('btnCopy_wait').addEventListener('click', async function(){
+      try{ await navigator.clipboard.writeText($('output').textContent||''); this.textContent='Copied!'; setTimeout(()=>{this.textContent='Copy Prompt'},1200); }catch{ alert('Gagal menyalin ke clipboard'); }
+    });
+
+    // Placeholder Tab 2
+    $('btnGenerate_reply')?.addEventListener('click',()=>{$('output').textContent='(Tab 2 belum direvisi di versi ini)';});
+    $('btnCopy_reply')?.addEventListener('click', async function(){ try{ await navigator.clipboard.writeText($('output').textContent||''); this.textContent='Copied!'; setTimeout(()=>{this.textContent='Copy Prompt'},1200);}catch{ alert('Gagal menyalin ke clipboard'); }});
+  </script>
+</body>
+</html>
